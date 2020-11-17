@@ -3,84 +3,80 @@
 
 yearly_health_pulse = { #Fired from the birthday pulse
 	on_actions = {
-        # uses balanced_disease_outbreak_pulse which is a copy of disease_outbreak_pulse rebalanced to fire every year because a 5-year pulse
-        # will make diseases like pneumonia, typhus, etc. much rarer due to their additional weights rarely being valid in the interim
-        # (since, for example, pneumonia being more likely while ill makes it much rarer since illness rarely lasts more than two years)
-		balanced_disease_outbreak_pulse
 		delay = { days = { 10 30 } }
 		wounded_recovery_pulse	
 	}
+    first_valid_on_action = {
+        # uses balanced_disease_outbreak_pulse which is a copy of disease_outbreak_pulse rebalanced to fire every year because a 5-year pulse
+        # will make diseases like pneumonia, typhus, etc. much rarer due to their additional weights rarely being valid in the interim
+        # (since, for example, pneumonia being more likely while ill makes it much rarer since illness rarely lasts more than two years)
+        delay = { 10 30 }
+        infant_disease_outbreak_pulse
+        child_disease_outbreak_pulse
+		balanced_disease_outbreak_pulse
+    }
 }
 
-
 disease_outbreak_pulse = {
-    # purposely left blank so that year_on_actions.txt doesn't need to be modified directly to 'remove' this
+    # purposely left blank so that yearly_on_actions.txt doesn't need to be modified directly to 'remove' this
 }
 
 #OUTBREAK
 #Randomly getting a disease (not contagion, that is handled by effects applying disease)
 
+infant_disease_outbreak_pulse = {
+    trigger = {
+        age <= 1
+    }
+	random_events = {
+        # around 25% of children in the middle ages died as infants with likely a great majority of
+        # them being SIDS-type deaths, but those don't introduce much to the game so they're left out for now
+		chance_to_happen = 30
+
+		chance_of_no_event = chance_of_no_disease_outbreak_value
+
+		2000 = health.1001 	#Ill
+		160 = health.1002  	#Pneumonic, x35 as common when ill
+		40 = health.1004  	#Leprosy
+		100 = health.1005 	#Typhus, 7x common when commander/combat character
+		100 = health.1006 	#Consumption
+		150 = health.1007 	#Cancer
+		2 = health.1010		#Smallpox
+		2 = health.1011		#Bubonic plague, won't happen before 1346
+	}
+}
+
+child_disease_outbreak_pulse = {
+    trigger = {
+        is_adult = no
+    }
+	random_events = {
+        # aiming to simulate historical figure of around 50% of children dying before maturity in the middle ages
+        # accidents and such play a role, but those are left out for now
+
+        # a 5% chance every year ~50% chance it happens at least once in 15 years which is still low 
+        # for mortality due to high chance of low-mortality illnesses, but we'll use it for now
+		chance_to_happen = 5
+
+		chance_of_no_event = chance_of_no_disease_outbreak_value
+
+		2000 = health.1001 	#Ill
+		80 = health.1002  	#Pneumonic, x35 as common when ill
+		50 = health.1003 	#Gout-ridden
+		40 = health.1004  	#Leprosy
+		100 = health.1005 	#Typhus, 7x common when commander/combat character
+		100 = health.1006 	#Consumption
+		150 = health.1007 	#Cancer
+		4 = health.1010		#Smallpox
+		2 = health.1011		#Bubonic plague, won't happen before 1346
+	}
+}
+
 balanced_disease_outbreak_pulse = {
 	random_events = {
 		chance_to_happen = 2
 
-		chance_of_no_event = {
-			# Perk reduces chance of sickness for yourself and for Courtiers/Guests
-			if = {
-				limit = {
-					has_perk = wash_your_hands_perk
-				}
-				value = 50
-			}
-			else_if = {
-				limit = {
-					exists = host
-					host = { has_perk = wash_your_hands_perk }
-				}
-				value = 25
-			}
-			
-			if = { # Difficulty
-				limit = {
-					is_ai = no
-					has_game_rule = easy_difficulty
-				}
-				value = 25
-			}
-			else_if = {
-				limit = {
-					is_ai = no
-					has_game_rule = very_easy_difficulty
-				}
-				value = 75
-			}
-			else_if = {
-				limit = {
-					is_ai = yes
-					has_game_rule = easy_difficulty
-					any_parent = {
-						is_ai = no
-					}
-				}
-				value = 15
-			}
-			else_if = {
-				limit = {
-					is_ai = no
-					has_game_rule = very_easy_difficulty
-					any_parent = {
-						is_ai = no
-					}
-				}
-				value = 50
-			}
-			if = { # Game Rule
-				limit = {
-					has_game_rule = fewer_minor_disease_frequency
-				}
-				value = 30
-			}
-		}
+		chance_of_no_event = chance_of_no_disease_outbreak_value
 
 		4000 = health.1001 	#Ill
 		80 = health.1002  	#Pneumonic, x35 as common when ill
@@ -91,7 +87,7 @@ balanced_disease_outbreak_pulse = {
 		150 = health.1007 	#Cancer
 		150 = health.1008 	#Lover's Pox
 		120 = health.1009 	#Great pox
-		2 = health.1010		#Smallpox
+		4 = health.1010		#Smallpox
 		2 = health.1011		#Bubonic plague, won't happen before 1346
 	}
 }
