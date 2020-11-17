@@ -13,7 +13,7 @@ pregnancy.0001 = {
 	immediate = {
 		#PREGNANCY COMPLICATION CALCULATIONS & FLAG-SETTING
 		random_list = {
-			200 = { #All goes smoothly!
+			100 = { #All goes smoothly!
 				#Less likely if health is bad
 				modifier = {
 					health <= fine_health
@@ -73,9 +73,9 @@ pregnancy.0001 = {
 					days = { 180 200 }
 				}
 			}
-			2 = { #Mother dies
+			1 = { #Mother dies
 				modifier = { #to keep players from dying excessively
-					add = -2
+					add = 0
 					is_ai = no
 				}
 				add_character_flag = { #Flags blocks other birth events
@@ -83,9 +83,9 @@ pregnancy.0001 = {
 					days = 270
 				}
 			}
-			2 = { #Mother and child dies (this triggers when the birth "should" have gone down, since we don't want to create the baby)
+			1 = { #Mother and child dies (this triggers when the birth "should" have gone down, since we don't want to create the baby)
 				modifier = { #to keep players from dying excessively
-					add = -2
+					add = 0
 					is_ai = no
 				}
 				trigger_event = {
