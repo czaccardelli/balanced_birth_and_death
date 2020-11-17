@@ -3,19 +3,26 @@
 
 yearly_health_pulse = { #Fired from the birthday pulse
 	on_actions = {
-		#disease_outbreak_pulse # moved to a 5-year pulse in yearly_on_actions.txt
+        # uses balanced_disease_outbreak_pulse which is a copy of disease_outbreak_pulse rebalanced to fire every year because a 5-year pulse
+        # will make diseases like pneumonia, typhus, etc. much rarer due to their additional weights rarely being valid in the interim
+        # (since, for example, pneumonia being more likely while ill makes it much rarer since illness rarely lasts more than two years)
+		balanced_disease_outbreak_pulse
 		delay = { days = { 10 30 } }
 		wounded_recovery_pulse	
 	}
 }
 
 
+disease_outbreak_pulse = {
+    # purposely left blank so that year_on_actions.txt doesn't need to be modified directly to 'remove' this
+}
+
 #OUTBREAK
 #Randomly getting a disease (not contagion, that is handled by effects applying disease)
 
-disease_outbreak_pulse = {
+balanced_disease_outbreak_pulse = {
 	random_events = {
-		chance_to_happen = 10
+		chance_to_happen = 2
 
 		chance_of_no_event = {
 			# Perk reduces chance of sickness for yourself and for Courtiers/Guests
