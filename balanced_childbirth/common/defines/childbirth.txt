@@ -79,5 +79,5 @@
 	DIVINE_MARRIAGE_FERTILITY_MULTIPLIER = 1 # Multiplier if the couple is close or extended family and their faith allows divine marriage
 	CLOSE_FAMILY_FERTILITY_MULTIPLIER = 0.9 # Multiplier if the couple is close family and their faith does not allow divine marriage
 	EXTENDED_FAMILY_FERTILITY_MULTIPLIER = 1 # Multiplier if the couple is extended family and their faith does not allow divine marriage
-	FERTILITY_IN_POOL_MULTIPLIER = 0.25	# Characters in the pool will have their fertility multiplied by this
+	FERTILITY_IN_POOL_MULTIPLIER = 0.5	# Characters in the pool will have their fertility multiplied by this
 }
