@@ -10,7 +10,7 @@ yearly_health_pulse = { #Fired from the birthday pulse
         # uses balanced_disease_outbreak_pulse which is a copy of disease_outbreak_pulse rebalanced to fire every year because a 5-year pulse
         # will make diseases like pneumonia, typhus, etc. much rarer due to their additional weights rarely being valid in the interim
         # (since, for example, pneumonia being more likely while ill makes it much rarer since illness rarely lasts more than two years)
-        delay = { 10 30 }
+        delay = { days = { 10 30 } }
         infant_disease_outbreak_pulse
         child_disease_outbreak_pulse
 		balanced_disease_outbreak_pulse
